@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Pro | Gaming Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5865F2',
+                        dark: '#1e1f22',
+                        darker: '#111214',
+                        accent: '#00a8fc',
+                    },
+                    fontFamily: {
+                        'sans': ['"Whitney"', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+                        'display': ['"Ginto"', '"Whitney"', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.iife.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #2a2e35 0%, #1a1c20 100%);
+            color: #f6f6f7;
+            min-height: 100vh;
+        }
+        .glow {
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #5865F2 0%, #404EED 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+        .task-card {
+            background: rgba(30, 31, 34, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(88, 101, 242, 0.5);
+        }
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5865F2 0%, #00a8fc 100%);
+            transition: width 0.5s ease;
+        }
+        .discord-avatar {
+            border: 3px solid #5865F2;
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.3);
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #5865F2;
+            transition: width 0.3s ease;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .active-nav::after {
+            width: 100%;
+        }
+        .pixel-corners {
+            clip-path: polygon(
+                0 10px, 10px 10px, 10px 0, 
+                calc(100% - 10px) 0, calc(100% - 10px) 10px, 
+                100% 10px, 100% calc(100% - 10px), 
+                calc(100% - 10px) calc(100% - 10px), 
+                calc(100% - 10px) 100%, 
+                10px 100%, 10px calc(100% - 10px), 
+                0 calc(100% - 10px)
+            );
+        }
+    </style>
+</head>
+<body class="font-sans h-full">
+    <!-- Login Page -->
+    <div id="login-page" class="flex flex-col items-center justify-center min-h-screen p-4">
+        <div class="w-full max-w-md text-center" data-aos="fade-up">
+            <div class="mb-8">
+                <h1 class="text-5xl font-bold mb-2 text-accent font-display">BM PRO</h1>
+                <p class="text-gray-400">Gaming Dashboard</p>
+            </div>
+            
+            <div class="bg-darker p-8 rounded-xl shadow-xl glow mb-6">
+                <h2 class="text-2xl font-bold mb-6">Link Your Discord Account</h2>
+                <p class="text-gray-400 mb-6">Connect your Discord account to access the gaming dashboard</p>
+                
+                <button id="discord-login-btn" class="btn-primary text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="disc" class="mr-2"></i> Link Discord Account
+                </button>
+                
+                <div class="flex items-center my-6">
+                    <div class="flex-grow border-t border-gray-700"></div>
+                    <span class="mx-4 text-gray-500">OR</span>
+                    <div class="flex-grow border-t border-gray-700"></div>
+                </div>
+                
+                <button id="guest-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center mx-auto">
+                    <i data-feather="eye" class="mr-2"></i> Continue as Guest
+                </button>
+            </div>
+            
+            <p class="text-gray-500 text-sm">By linking your account, you agree to our Terms of Service</p>
+        </div>
+        
+        <div class="absolute bottom-6 left-0 right-0 text-center text-gray-500 text-sm">
+            <p>© 2023 BM Pro. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Page (Hidden by default) -->
+    <div id="dashboard-page" class="hidden min-h-screen">
+        <!-- Header -->
+        <header class="bg-darker border-b border-gray-800 py-4 px-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-xl font-bold text-accent font-display">BM PRO</h1>
+                <nav class="ml-10 hidden md:flex space-x-8">
+                    <a href="#" class="nav-item active-nav text-white">Dashboard</a>
+                    <a href="#" class="nav-item text-gray-400 hover:text-white">Tasks</a>
+                    <a href="#" class="nav-item text-gray-400 hover:text-white">Profile</a>
+                </nav>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="bg-primary text-white px-4 py-1 rounded-full flex items-center">
+                    <span class="mr-2">500</span>
+                    <i data-feather="star" class="w-4 h-4"></i>
+                </div>
+                <div class="relative group">
+                    <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center cursor-pointer">
+                        <i data-feather="user" class="w-5 h-5"></i>
+                    </div>
+                    <div class="absolute right-0 mt-2 w-48 bg-darker rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Profile Card -->
+                <div class="bg-darker rounded-xl p-6 shadow-lg lg:col-span-1">
+                    <div class="flex flex-col items-center">
+                        <div class="discord-avatar w-24 h-24 rounded-full mb-4 overflow-hidden">
+                            <img src="http://static.photos/technology/200x200/1" alt="Discord Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <h2 class="text-xl font-bold">DiscordUser#1234</h2>
+                        <p class="text-gray-400 mb-4">Member since: 2023</p>
+                        
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 mb-4">
+                            <div class="bg-primary h-2.5 rounded-full" style="width: 45%"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 w-full text-center">
+                            <div>
+                                <div class="text-2xl font-bold">500</div>
+                                <div class="text-xs text-gray-400">POINTS</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold">3</div>
+                                <div class="text-xs text-gray-400">TASKS</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold">45%</div>
+                                <div class="text-xs text-gray-400">PROGRESS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tasks Section -->
+                <div class="bg-darker rounded-xl p-6 shadow-lg lg:col-span-2">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Available Tasks</h2>
+                        <button class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+                            <i data-feather="plus" class="mr-2 w-4 h-4"></i> New Task
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Task 1 -->
+                        <div class="task-card rounded-lg p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mr-4">
+                                    <i data-feather="check-circle" class="text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">Daily Check-in</h3>
+                                    <p class="text-sm text-gray-400">Visit the site daily to earn points</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-accent font-bold mr-4">+50</span>
+                                <button class="bg-primary text-white px-4 py-1 rounded-full text-sm">Claim</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Task 2 -->
+                        <div class="task-card rounded-lg p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mr-4">
+                                    <i data-feather="message-square" class="text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">Join Discord Server</h3>
+                                    <p class="text-sm text-gray-400">Become part of our community</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-accent font-bold mr-4">+100</span>
+                                <a href="https://discord.gg/kkdDtDcG" target="_blank" class="bg-primary text-white px-4 py-1 rounded-full text-sm">Join</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Task 3 -->
+                        <div class="task-card rounded-lg p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mr-4">
+                                    <i data-feather="smartphone" class="text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">Verify Phone Number</h3>
+                                    <p class="text-sm text-gray-400">Add extra security to your account</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-accent font-bold mr-4">+150</span>
+                                <button class="bg-gray-700 text-gray-400 px-4 py-1 rounded-full text-sm cursor-not-allowed">Pending</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="bg-darker rounded-xl p-6 shadow-lg lg:col-span-3">
+                    <h2 class="text-xl font-bold mb-6">Recent Activity</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-gray-800">
+                                    <th class="pb-3">Task</th>
+                                    <th class="pb-3">Date</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3">Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-800">
+                                    <td class="py-3">Daily Check-in</td>
+                                    <td class="py-3">Today</td>
+                                    <td class="py-3"><span class="text-green-500">Completed</span></td>
+                                    <td class="py-3 text-accent">+50</td>
+                                </tr>
+                                <tr class="border-b border-gray-800">
+                                    <td class="py-3">Join Discord Server</td>
+                                    <td class="py-3">2 days ago</td>
+                                    <td class="py-3"><span class="text-green-500">Completed</span></td>
+                                    <td class="py-3 text-accent">+100</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3">Verify Phone Number</td>
+                                    <td class="py-3">1 week ago</td>
+                                    <td class="py-3"><span class="text-yellow-500">Pending</span></td>
+                                    <td class="py-3 text-gray-500">+150</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Replace icons
+        feather.replace();
+        
+        // Discord login button animation
+        const discordBtn = document.getElementById('discord-login-btn');
+        if (discordBtn) {
+            discordBtn.addEventListener('mouseenter', () => {
+                anime({
+                    targets: discordBtn,
+                    scale: 1.05,
+                    duration: 300
+                });
+            });
+            
+            discordBtn.addEventListener('mouseleave', () => {
+                anime({
+                    targets: discordBtn,
+                    scale: 1,
+                    duration: 300
+                });
+            });
+            
+            discordBtn.addEventListener('click', () => {
+                // Simulate Discord OAuth flow
+                anime({
+                    targets: discordBtn,
+                    scale: 0.95,
+                    duration: 200,
+                    complete: function() {
+                        // Show loading state
+                        discordBtn.innerHTML = '<i data-feather="loader" class="animate-spin mr-2"></i> Connecting...';
+                        feather.replace();
+                        
+                        // Simulate successful connection after 2 seconds
+                        setTimeout(() => {
+                            document.getElementById('login-page').classList.add('hidden');
+                            document.getElementById('dashboard-page').classList.remove('hidden');
+                            
+                            // Animate dashboard entrance
+                            anime({
+                                targets: '#dashboard-page',
+                                opacity: [0, 1],
+                                duration: 800,
+                                easing: 'easeInOutQuad'
+                            });
+                        }, 2000);
+                    }
+                });
+            });
+        }
+        
+        // Guest button animation
+        const guestBtn = document.getElementById('guest-btn');
+        if (guestBtn) {
+            guestBtn.addEventListener('click', () => {
+                anime({
+                    targets: guestBtn,
+                    translateY: [0, -5, 0],
+                    duration: 800,
+                    easing: 'easeInOutQuad'
+                });
+                
+                // Show dashboard with limited access
+                setTimeout(() => {
+                    document.getElementById('login-page').classList.add('hidden');
+                    document.getElementById('dashboard-page').classList.remove('hidden');
+                    
+                    // Show warning for guest access
+                    alert('Guest access has limited functionality. Please link your Discord account for full access.');
+                }, 500);
+            });
+        }
+        
+        // Task card animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskCards = document.querySelectorAll('.task-card');
+            taskCards.forEach((card, index) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                
+                anime({
+                    targets: card,
+                    opacity: 1,
+                    translateY: 0,
+                    delay: index * 100,
+                    duration: 600,
+                    easing: 'easeOutExpo'
+                });
+                
+                card.addEventListener('click', function() {
+                    anime({
+                        targets: this,
+                        scale: 0.98,
+                        duration: 200
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
