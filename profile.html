@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Pro | Profile</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5865F2',
+                        dark: '#1e1f22',
+                        darker: '#111214',
+                        accent: '#00a8fc',
+                    },
+                    fontFamily: {
+                        'sans': ['"Whitney"', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+                        'display': ['"Ginto"', '"Whitney"', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #2a2e35 0%, #1a1c20 100%);
+            color: #f6f6f7;
+            min-height: 100vh;
+        }
+        .glow {
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #5865F2 0%, #404EED 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+        .discord-avatar {
+            border: 3px solid #5865F2;
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.3);
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #5865F2;
+            transition: width 0.3s ease;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .active-nav::after {
+            width: 100%;
+        }
+        .profile-section {
+            background: rgba(30, 31, 34, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .info-card {
+            background: rgba(30, 31, 34, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .info-card:hover {
+            border-color: rgba(88, 101, 242, 0.3);
+            transform: translateY(-3px);
+        }
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            background: rgba(88, 101, 242, 0.2);
+        }
+        .copy-btn.copied {
+            background: rgba(67, 181, 129, 0.2);
+            color: #43b581;
+        }
+    </style>
+</head>
+<body class="font-sans h-full">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center">
+            <h1 class="text-xl font-bold text-accent font-display">BM PRO</h1>
+            <nav class="ml-10 hidden md:flex space-x-8">
+                <a href="index.html" class="nav-item text-gray-400 hover:text-white">Dashboard</a>
+                <a href="tasks.html" class="nav-item text-gray-400 hover:text-white">Tasks</a>
+                <a href="profile.html" class="nav-item active-nav text-white">Profile</a>
+            </nav>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <div class="bg-primary text-white px-4 py-1 rounded-full flex items-center">
+                <span class="mr-2">500</span>
+                <i data-feather="star" class="w-4 h-4"></i>
+            </div>
+            <div class="relative group">
+                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center cursor-pointer">
+                    <i data-feather="user" class="w-5 h-5"></i>
+                </div>
+                <div class="absolute right-0 mt-2 w-48 bg-darker rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Settings</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Profile Card -->
+                <div class="lg:col-span-1">
+                    <div class="profile-section rounded-xl p-6 shadow-lg">
+                        <div class="flex flex-col items-center">
+                            <div class="discord-avatar w-32 h-32 rounded-full mb-4 overflow-hidden">
+                                <img src="http://static.photos/technology/200x200/1" alt="Discord Avatar" class="w-full h-full object-cover">
+                            </div>
+                            <h2 class="text-2xl font-bold">DiscordUser#1234</h2>
+                            <p class="text-gray-400 mb-6">Member since: 2023</p>
+                            
+                            <div class="w-full bg-gray-800 rounded-full h-2.5 mb-4">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 45%"></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4 w-full text-center mb-6">
+                                <div>
+                                    <div class="text-2xl font-bold">500</div>
+                                    <div class="text-xs text-gray-400">POINTS</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold">3</div>
+                                    <div class="text-xs text-gray-400">TASKS</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold">45%</div>
+                                    <div class="text-xs text-gray-400">PROGRESS</div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn-primary text-white font-bold py-3 px-6 rounded-lg w-full">
+                                <i data-feather="edit" class="mr-2"></i> Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section rounded-xl p-6 shadow-lg mt-6">
+                        <h3 class="text-lg font-bold mb-4">Badges</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-gray-800 rounded-lg p-3 flex flex-col items-center">
+                                <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="award" class="text-white"></i>
+                                </div>
+                                <span class="text-xs text-center">Newbie</span>
+                            </div>
+                            <div class="bg-gray-800 rounded-lg p-3 flex flex-col items-center">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="check" class="text-white"></i>
+                                </div>
+                                <span class="text-xs text-center">Verified</span>
+                            </div>
+                            <div class="bg-gray-800 rounded-lg p-3 flex flex-col items-center">
+                                <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="star" class="text-white"></i>
+                                </div>
+                                <span class="text-xs text-center">Member</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Info Section -->
+                <div class="lg:col-span-2">
+                    <div class="profile-section rounded-xl p-6 shadow-lg">
+                        <h2 class="text-xl font-bold mb-6">Account Information</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="info-card rounded-lg p-4">
+                                <h3 class="text-sm text-gray-400 mb-1">Discord Username</h3>
+                                <div class="flex justify-between items-center">
+                                    <p class="font-bold">DiscordUser#1234</p>
+                                    <button class="copy-btn text-gray-400 hover:text-white p-1 rounded-md">
+                                        <i data-feather="copy" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card rounded-lg p-4">
+                                <h3 class="text-sm text-gray-400 mb-1">Discord ID</h3>
+                                <div class="flex justify-between items-center">
+                                    <p class="font-bold">123456789012345678</p>
+                                    <button class="copy-btn text-gray-400 hover:text-white p-1 rounded-md">
+                                        <i data-feather="copy" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card rounded-lg p-4">
+                                <h3 class="text-sm text-gray-400 mb-1">Account Status</h3>
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                    <p class="font-bold">Active</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card rounded-lg p-4">
+                                <h3 class="text-sm text-gray-400 mb-1">Member Since</h3>
+                                <p class="font-bold">Jan 15, 2023</p>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold mb-4">Linked Accounts</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div class="info-card rounded-lg p-4 flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-[#5865F2] flex items-center justify-center mr-3">
+                                    <i data-feather="disc" class="text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Discord</h4>
+                                    <p class="text-xs text-gray-400">Connected</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card rounded-lg p-4 flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center mr-3">
+                                    <i data-feather="smartphone" class="text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Phone</h4>
+                                    <p class="text-xs text-gray-400">Not connected</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card rounded-lg p-4 flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center mr-3">
+                                    <i data-feather="mail" class="text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Email</h4>
+                                    <p class="text-xs text-gray-400">Not connected</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold mb-4">Quick Actions</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                                <i data-feather="disc" class="mr-2"></i> Discord Server
+                            </button>
+                            <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                                <i data-feather="smartphone" class="mr-2"></i> Verify Phone
+                            </button>
+                            <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                                <i data-feather="share-2" class="mr-2"></i> Invite Friends
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section rounded-xl p-6 shadow-lg mt-6">
+                        <h2 class="text-xl font-bold mb-6">Security</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <div>
+                                    <h3 class="font-bold">Two-Factor Authentication</h3>
+                                    <p class="text-sm text-gray-400">Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <div>
+                                    <h3 class="font-bold">Change Password</h3>
+                                    <p class="text-sm text-gray-400">Update your account password</p>
+                                </div>
+                                <button class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-lg text-sm">
+                                    Change
+                                </button>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-4 bg-gray-800 rounded-lg">
+                                <div>
+                                    <h3 class="font-bold">Active Sessions</h3>
+                                    <p class="text-sm text-gray-400">Manage your logged in devices</p>
+                                </div>
+                                <button class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-1 rounded-lg text-sm">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize animations
+        AOS.init();
+        
+        // Replace icons
+        feather.replace();
+        
+        // Copy button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const textToCopy = this.parentElement.querySelector('p').textContent;
+                    navigator.clipboard.writeText(textToCopy);
+                    
+                    // Change button appearance temporarily
+                    this.classList.add('copied');
+                    this.innerHTML = '<i data-feather="check" class="w-4 h-4"></i>';
+                    feather.replace();
+                    
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                        this.innerHTML = '<i data-feather="copy" class="w-4 h-4"></i>';
+                        feather.replace();
+                    }, 2000);
+                });
+            });
+            
+            // Animate info cards on load
+            const infoCards = document.querySelectorAll('.info-card');
+            infoCards.forEach((card, index) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                
+                anime({
+                    targets: card,
+                    opacity: 1,
+                    translateY: 0,
+                    delay: index * 100,
+                    duration: 600,
+                    easing: 'easeOutExpo'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
