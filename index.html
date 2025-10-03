@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>Gaming Server Portal</title>
+  <title>Gaming Server DX Portal</title>
   <link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
   <style>
     body {
@@ -131,7 +131,7 @@ document.getElementById('serverForm').onsubmit = function(event) {
   if (valid) {
       document.getElementById('formStatus').innerHTML = "<span class='online'>در حال بررسی اتصال...</span> <span class='loader'></span>";
       setTimeout(() => {
-          document.getElementById('formStatus').innerHTML = "<span class='offline'>کانکشن سرور نامشخص!</span>";
+          document.getElementById('formStatus').innerHTML = "<span class='offline'>کانکشن سرور نامشخص!/IP log </span>";
           showConnectionFields(ip.value, port.value, user.value, sType, pass);
       }, 1850);
   }
